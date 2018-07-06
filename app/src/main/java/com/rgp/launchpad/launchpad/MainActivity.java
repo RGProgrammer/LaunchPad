@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.view.View;
 import android.widget.TextView;
@@ -40,49 +41,81 @@ public class MainActivity extends Activity {
         audiosources[5] = this.createAudioPlayer( audiosamples[5]);
 
 
-        ((Button) findViewById(R.id.audio1)).setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-
-                stop(audiosources[0]);
-                play(audiosources[0]);
-            }
-        });
-        ((Button) findViewById(R.id.audio2)).setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-
-                stop(audiosources[1]);
-                play(audiosources[1]);
-            }
-        });
-        ((Button) findViewById(R.id.audio3)).setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-
-                stop(audiosources[2]);
-                play(audiosources[2]);
-            }
-        });
-        ((Button) findViewById(R.id.audio4)).setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-
-                stop(audiosources[3]);
-                play(audiosources[3]);
-            }
-        });
-        ((Button) findViewById(R.id.audio5)).setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-
-                stop(audiosources[4]);
-                play(audiosources[4]);
-            }
-        });
-        ((Button) findViewById(R.id.audio6)).setOnClickListener(new OnClickListener() {
-            public void onClick(View view) {
-
-                stop(audiosources[5]);
-                play(audiosources[5]);
+        ((Button) findViewById(R.id.audio1)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                    stop(audiosources[0]);
+                    play(audiosources[0]);
+                    return true ;
+                }
+                return false ;
             }
         });
 
+
+        ((Button) findViewById(R.id.audio2)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                    stop(audiosources[1]);
+                    play(audiosources[1]);
+                    return true ;
+                }
+                return false ;
+            }
+        });
+
+
+        ((Button) findViewById(R.id.audio3)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                    stop(audiosources[2]);
+                    play(audiosources[2]);
+                    return true ;
+                }
+                return false ;
+            }
+        });
+
+
+        ((Button) findViewById(R.id.audio4)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                    stop(audiosources[3]);
+                    play(audiosources[3]);
+                    return true ;
+                }
+                return false ;
+            }
+        });
+
+
+        ((Button) findViewById(R.id.audio5)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                    stop(audiosources[4]);
+                    play(audiosources[4]);
+                    return true ;
+                }
+                return false ;
+            }
+        });
+
+        ((Button) findViewById(R.id.audio6)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction()==MotionEvent.ACTION_DOWN){
+                    stop(audiosources[5]);
+                    play(audiosources[5]);
+                    return true ;
+                }
+                return false ;
+            }
+        });
     }
     public void onDestroy(){
 
