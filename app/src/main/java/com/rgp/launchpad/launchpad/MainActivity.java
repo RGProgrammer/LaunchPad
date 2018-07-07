@@ -41,77 +41,97 @@ public class MainActivity extends Activity {
         audiosources[5] = this.createAudioPlayer( audiosamples[5]);
 
 
-        ((Button) findViewById(R.id.audio1)).setOnTouchListener(new View.OnTouchListener() {
+        ((Button) findViewById(R.id.source1)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN){
                     stop(audiosources[0]);
                     play(audiosources[0]);
+                    ((Button)v).setBackgroundColor(0xFF00FF00);
+
                     return true ;
+                }else if(event.getAction()==MotionEvent.ACTION_UP) {
+                    ((Button)v).setBackgroundColor(0xFF464646);
                 }
                 return false ;
             }
         });
 
 
-        ((Button) findViewById(R.id.audio2)).setOnTouchListener(new View.OnTouchListener() {
+        ((Button) findViewById(R.id.source2)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN){
                     stop(audiosources[1]);
                     play(audiosources[1]);
+                    ((Button)v).setBackgroundColor(0xFF00FF00);
                     return true ;
+                }else if(event.getAction()==MotionEvent.ACTION_UP) {
+                    ((Button)v).setBackgroundColor(0xFF464646);
                 }
                 return false ;
             }
         });
 
 
-        ((Button) findViewById(R.id.audio3)).setOnTouchListener(new View.OnTouchListener() {
+        ((Button) findViewById(R.id.source3)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN){
                     stop(audiosources[2]);
                     play(audiosources[2]);
+                    ((Button)v).setBackgroundColor(0xFF00FF00);
                     return true ;
+                }else if(event.getAction()==MotionEvent.ACTION_UP) {
+                    ((Button)v).setBackgroundColor(0xFF464646);
                 }
                 return false ;
             }
         });
 
 
-        ((Button) findViewById(R.id.audio4)).setOnTouchListener(new View.OnTouchListener() {
+        ((Button) findViewById(R.id.source4)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN){
                     stop(audiosources[3]);
                     play(audiosources[3]);
+                    ((Button)v).setBackgroundColor(0xFF00FF00);
                     return true ;
+                }else if(event.getAction()==MotionEvent.ACTION_UP) {
+                    ((Button)v).setBackgroundColor(0xFF464646);
                 }
                 return false ;
             }
         });
 
 
-        ((Button) findViewById(R.id.audio5)).setOnTouchListener(new View.OnTouchListener() {
+        ((Button) findViewById(R.id.source5)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN){
                     stop(audiosources[4]);
                     play(audiosources[4]);
+                    ((Button)v).setBackgroundColor(0xFF00FF00);
                     return true ;
+                }else if(event.getAction()==MotionEvent.ACTION_UP) {
+                    ((Button)v).setBackgroundColor(0xFF464646);
                 }
                 return false ;
             }
         });
 
-        ((Button) findViewById(R.id.audio6)).setOnTouchListener(new View.OnTouchListener() {
+        ((Button) findViewById(R.id.source6)).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction()==MotionEvent.ACTION_DOWN){
+
                     stop(audiosources[5]);
                     play(audiosources[5]);
+                    ((Button)v).setBackgroundColor(0xFF00FF00);
                     return true ;
+                }else if(event.getAction()==MotionEvent.ACTION_UP) {
+                    ((Button)v).setBackgroundColor(0xFF464646);
                 }
                 return false ;
             }
