@@ -5,14 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context="com.rgp.launchpad.launchpad.MainActivity"
+    tools:context="com.rgp.launchpad.launchpad.com.rgp.launchpad.activities.MainActivity"
     tools:targetApi="n_mr1">
+
+    <ImageView
+        android:id="@+id/returnbutton"
+        android:layout_width="30dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="@+id/player"
+        app:layout_constraintTop_toTopOf="@+id/player" />
 
     <view
         android:id="@+id/player"
         class="android.support.constraint.Placeholder"
         android:layout_width="0dp"
-        android:layout_height="96dp"
+        android:layout_height="66dp"
         android:layout_marginBottom="8dp"
         android:background="@color/player"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,45 +32,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/play"
-        android:layout_width="47dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/play"
-        app:layout_constraintBottom_toBottomOf="@+id/player"
-        app:layout_constraintStart_toStartOf="@+id/player"
-        app:layout_constraintTop_toTopOf="@+id/player"
-        app:layout_constraintVertical_bias="0.228" />
-
-    <ImageView
-        android:id="@+id/pause"
-        android:layout_width="47dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/pause"
-        app:layout_constraintStart_toEndOf="@+id/play"
-        app:layout_constraintTop_toTopOf="@+id/player" />
-
-    <ImageView
-        android:id="@+id/stop"
-        android:layout_width="47dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/stop"
-        app:layout_constraintStart_toEndOf="@+id/pause"
-        app:layout_constraintTop_toTopOf="@+id/player" />
-
     <view
         android:id="@+id/buttons"
         class="android.support.constraint.Placeholder"
         id="@+id/view"
         android:layout_width="0dp"
-        android:layout_height="269dp"
+        android:layout_height="265dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="@color/player"
@@ -69,16 +46,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/player" />
-
-    <Button
-        android:id="@+id/source1"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="36dp"
-        android:background="@color/launchpad"
-        app:layout_constraintStart_toStartOf="@+id/buttons"
-        app:layout_constraintTop_toTopOf="@+id/buttons" />
 
     <Button
         android:id="@+id/source12"
@@ -114,7 +81,7 @@
         android:id="@+id/source9"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="112dp"
         android:layout_marginTop="20dp"
         android:background="@color/launchpad"
         app:layout_constraintStart_toStartOf="@+id/buttons"
@@ -125,7 +92,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@color/launchpad"
         app:layout_constraintStart_toEndOf="@+id/source7"
         app:layout_constraintTop_toBottomOf="@+id/source4" />
@@ -135,7 +102,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@color/launchpad"
         app:layout_constraintStart_toEndOf="@+id/source6"
         app:layout_constraintTop_toBottomOf="@+id/source3" />
@@ -145,7 +112,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:background="@color/launchpad"
         app:layout_constraintStart_toEndOf="@+id/source5"
         app:layout_constraintTop_toBottomOf="@+id/source2" />
@@ -154,8 +121,8 @@
         android:id="@+id/source5"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="16dp"
         android:background="@color/launchpad"
         app:layout_constraintStart_toStartOf="@+id/buttons"
         app:layout_constraintTop_toBottomOf="@+id/source1" />
@@ -165,7 +132,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:background="@color/launchpad"
         app:layout_constraintStart_toEndOf="@+id/source3"
         app:layout_constraintTop_toTopOf="@+id/buttons" />
@@ -175,7 +142,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:background="@color/launchpad"
         app:layout_constraintStart_toEndOf="@+id/source2"
         app:layout_constraintTop_toTopOf="@+id/buttons" />
@@ -185,15 +152,25 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:background="@color/launchpad"
         app:layout_constraintStart_toEndOf="@+id/source1"
         app:layout_constraintTop_toTopOf="@+id/buttons" />
 
+    <Button
+        android:id="@+id/source1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/launchpad"
+        app:layout_constraintStart_toStartOf="@+id/buttons"
+        app:layout_constraintTop_toTopOf="@+id/buttons" />
+
     <ImageView
         android:id="@+id/config"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="31dp"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/config"
@@ -220,23 +197,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/page1" />
 
-    <ImageView
-        android:id="@+id/page3"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="28dp"
-        android:src="@drawable/deactive"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/page2" />
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="244dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/player"
+        app:layout_constraintStart_toStartOf="@+id/player"
+        app:layout_constraintTop_toTopOf="@+id/player" />
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_width="203dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintStart_toEndOf="@+id/stop"
+    <Button
+        android:id="@+id/stopall"
+        android:layout_width="100dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="16dp"
+        android:text="STOP ALL"
+        app:layout_constraintStart_toStartOf="@+id/player"
         app:layout_constraintTop_toTopOf="@+id/player" />
 
 </android.support.constraint.ConstraintLayout>

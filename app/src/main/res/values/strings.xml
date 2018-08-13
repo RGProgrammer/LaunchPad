@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">LaunchPad</string>
+    <string name="title_activity_config_entry">ConfigEntry</string>
+
+    <string name="title_activity_button_config">ButtonConfig</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

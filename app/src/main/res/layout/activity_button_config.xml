@@ -1,0 +1,77 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="com.rgp.launchpad.activities.ButtonConfig">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+    <Button
+        android:id="@+id/selection"
+        android:layout_width="444dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="252dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="48dp"
+        android:text="Select a file ..."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="88dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="20dp"
+        android:text="confirm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioGroup
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:checkedButton="@+id/simplemode"
+        android:orientation="horizontal"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selection">
+
+        <RadioButton
+            android:id="@+id/simplemode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:contentDescription="Simple"
+            android:text="Simple"
+            android:textColor="#ff000000"
+            tools:text="Simple" />
+
+        <RadioButton
+            android:id="@+id/holdmode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hold"
+            android:textColor="#ff000000" />
+
+        <RadioButton
+            android:id="@+id/loopmode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Loop"
+            android:textColor="#ff000000" />
+
+    </RadioGroup>
+</android.support.constraint.ConstraintLayout>

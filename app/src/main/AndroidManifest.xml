@@ -1,25 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rgp.launchpad.launchpad">
-	<!-- RECORD_AUDIO is needed to create an audio recorder -->
-  <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
-  <!-- MODIFY_AUDIO_SETTINGS is needed to use audio effects such as environmental reverb -->
-  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"></uses-permission>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+
+    <!-- RECORD_AUDIO is needed to create an audio recorder -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- MODIFY_AUDIO_SETTINGS is needed to use audio effects such as environmental reverb -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name="com.rgp.launchpad.activities.MainActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.rgp.launchpad.activities.ButtonConfig"
+            android:label="@string/title_activity_button_config"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.ButtonConfig" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.rgp.launchpad.activities.FileSelect"
+            android:label="Select a file "
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.FileSelect" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>
