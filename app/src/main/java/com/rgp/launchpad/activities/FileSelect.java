@@ -58,7 +58,6 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
             for(int i=0 ; i<titles.length ; ++i) {
                 Titles.add(titles[i]);
             }
-            super.addAll(Titles);
         }
         @NonNull
         @Override
