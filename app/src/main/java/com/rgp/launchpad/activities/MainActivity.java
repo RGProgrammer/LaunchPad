@@ -26,6 +26,7 @@ public class MainActivity extends Activity{
     public static final int CONFIGMODE = 1;
     private  int mode ;
     private static int selectedPage= 0 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,6 @@ public class MainActivity extends Activity{
         ((ImageView)findViewById(R.id.returnbutton)).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //((ImageView)v).setImageDrawable(getDrawable(R.drawable.configpressed));
                 SoundEngineInterface.stopAll();
                 MainActivity.this.switchMode(PLAYERMODE);
                 Toast.makeText(MainActivity.this,"PLAYERMODE",Toast.LENGTH_SHORT);
@@ -178,6 +178,8 @@ public class MainActivity extends Activity{
         ((Button) findViewById(R.id.source11)).setOnTouchListener(ButtonTouchListener.ButtonListener);
         ((Button) findViewById(R.id.source12)).setOnTouchListener(ButtonTouchListener.ButtonListener);
     }
+
+
     public static int  getSelectedPage(){
         return selectedPage ;
     }
@@ -189,39 +191,44 @@ public class MainActivity extends Activity{
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String path=null;
+        int playmode=LaunchButtonConfig.SIMPLEMODE ;
         if(resultCode==RESULT_OK && data !=null){
-            String path=data.getExtras().getString("path");
-            if(path.endsWith(".mp3")) {
-                SoundEngineInterface.deleteAudioDataSource(requestCode);
-                SoundEngineInterface.deleteAudioplayer(requestCode);
-                int sample = SoundEngineInterface.createAudioDataSourceFromURI(path);
-                int player=0;
-                if ((player=SoundEngineInterface.createAudioPlayer(sample) )== 0)
-                    Toast.makeText(this, "cannot recreate audio source", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(this, "audio source recreated", Toast.LENGTH_SHORT).show();
-                for (int i=0;i< LaunchButtonConfig.list.size();++i){
-                    if(LaunchButtonConfig.list.get(i).getAudioID()==requestCode ){
-                        LaunchButtonConfig.list.get(i).setAudioID(player);
-                        break ;
+            if(data.hasExtra("path"))
+                path=data.getExtras().getString("path");
+            if(data.hasExtra("mode"))
+                playmode= data.getExtras().getInt("mode");
+        }
+        ConfigApply(requestCode,playmode,path);
+    }
+
+        public void  ConfigApply(int audioid, int mode , String path ) {
+            if(path!=null) {
+                if (path.endsWith(".mp3")) {
+                    SoundEngineInterface.deleteAudioDataSource(audioid);
+                    SoundEngineInterface.deleteAudioplayer(audioid);
+                    int sample = SoundEngineInterface.createAudioDataSourceFromURI(path);
+                    int player = 0;
+                    player=SoundEngineInterface.createAudioPlayer(sample);
+                    for (int i = 0; i < LaunchButtonConfig.list.size(); ++i) {
+                        if (LaunchButtonConfig.list.get(i).getAudioID() == audioid) {
+                            LaunchButtonConfig.list.get(i).setAudioID(player);
+                            break;
+                        }
                     }
                 }
             }
-            int playmode= data.getExtras().getInt("mode");
-            Toast.makeText(this,"mode = "+playmode,Toast.LENGTH_LONG).show();
             for (int i=0;i< LaunchButtonConfig.list.size();++i){
-                if(LaunchButtonConfig.list.get(i).getAudioID()==requestCode ){
-                    LaunchButtonConfig.list.get(i).setMode(playmode);
-                    if(playmode==LaunchButtonConfig.LOOPMODE) {
-                        int id = LaunchButtonConfig.list.get(i).getAudioID();
-                        SoundEngineInterface.loop(id,true);
+                if(LaunchButtonConfig.list.get(i).getAudioID()==audioid ){
+                    LaunchButtonConfig.list.get(i).setMode(mode);
+                    if(mode==LaunchButtonConfig.LOOPMODE) {
+                        SoundEngineInterface.loop(audioid,true);
                     }else{
-                        int id = LaunchButtonConfig.list.get(i).getAudioID();
-                        SoundEngineInterface.loop(id,false);
+                        SoundEngineInterface.loop(audioid,false);
                     }
                     break ;
                 }
             }
         }
-    }
+
 }

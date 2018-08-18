@@ -212,6 +212,7 @@ Java_com_rgp_launchpad_classes_SoundEngineInterface_deleteAudioplayer(JNIEnv *en
     if(audiosources[sourceId-1]){
         (*audiosources[sourceId-1])->Destroy(audiosources[sourceId-1]);
         audiosources[sourceId-1]= NULL;
+
     }
     return  true ;
 
