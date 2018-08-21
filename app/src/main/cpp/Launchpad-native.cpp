@@ -34,12 +34,12 @@ static SLDataSink defaultaudioSnk={NULL,NULL};
 static SLDataSource defaultsample={NULL,NULL} ;
 
 //audio sources
-const jint MAX_AUDIO_SOURCES = 18;
+const jint MAX_AUDIO_SOURCES = 24;
 static jint lastindexaudiosource = 0 ;
 static SLObjectItf audiosources[MAX_AUDIO_SOURCES];
 //audio samples
 
-const jint MAX_AUDIO_SAMPLES = 18;
+const jint MAX_AUDIO_SAMPLES = 24;
 static jint lastindexaudiosample = 0 ;
 static AudioSourceStruct audiosamples[MAX_AUDIO_SAMPLES];
 
