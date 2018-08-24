@@ -2,6 +2,7 @@ package com.rgp.launchpad.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.Button;
@@ -204,12 +205,14 @@ public class MainActivity extends Activity{
 
         public void  ConfigApply(int audioid, int mode , String path ) {
             if(path!=null) {
-                if (path.endsWith(".mp3")) {
+                if (path.endsWith(".mp3") || path.endsWith(".wav")) {
                     SoundEngineInterface.deleteAudioDataSource(audioid);
                     SoundEngineInterface.deleteAudioplayer(audioid);
-                    int sample = SoundEngineInterface.createAudioDataSourceFromURI(path);
+                    int sample = SoundEngineInterface.createAudioDataSourceFromURI(path.replace(" ","\u20"));
                     int player = 0;
                     player=SoundEngineInterface.createAudioPlayer(sample);
+                    if(player==0 )
+                        SoundEngineInterface.createAudioPlayer(0);
                     for (int i = 0; i < LaunchButtonConfig.list.size(); ++i) {
                         if (LaunchButtonConfig.list.get(i).getAudioID() == audioid) {
                             LaunchButtonConfig.list.get(i).setAudioID(player);

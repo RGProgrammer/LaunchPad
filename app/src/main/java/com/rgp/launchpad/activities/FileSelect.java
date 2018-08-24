@@ -3,6 +3,7 @@ package com.rgp.launchpad.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -80,7 +81,7 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
                 if(current.isDirectory())
                     icon.setImageResource(folderIcon);
                 else if(current.isFile()){
-                    if(current.getName().endsWith(".mp3"))
+                    if(current.getName().endsWith(".mp3") || current.getName().endsWith(".wav") )
                         icon.setImageResource(audioIcon);
                     else
                         icon.setImageResource(otherIcon);
@@ -95,7 +96,7 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
            String tmp ;
             if(path==""){
                 if(position==0){
-                    path="/storage/emulated/0";
+                    path= Environment.getExternalStorageDirectory().getPath();
                 }else if(position==1){
                     path= "/storage/sdcard0";
                 }
@@ -109,7 +110,7 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
                      mylayout.UpdateList(files);
                      mylayout.notifyDataSetChanged();
                  }else{
-                    if(file.getName().endsWith("mp3")){
+                    if(file.getName().endsWith(".mp3")|| file.getName().endsWith(".wav")){
                         Intent res= new Intent();
                         res.putExtra("path",path);
                         setResult(RESULT_OK,res);

@@ -37,12 +37,12 @@ public class ButtonTouchListener implements View.OnTouchListener , Serializable{
                             SoundEngineInterface.stop(config.getAudioID());
                             SoundEngineInterface.play(config.getAudioID());
                             v.setBackgroundColor(0xff00ff00);
-                           
+
                         }else if(config.getMode()==LaunchButtonConfig.LOOPMODE){
                             if(SoundEngineInterface.isStopped(config.getAudioID())==true){
                                 SoundEngineInterface.play(config.getAudioID());
                                 v.setBackgroundColor(0xff00ff00);
-                                
+
                             }else {
                                 SoundEngineInterface.stop(config.getAudioID());
                                 v.setBackgroundColor(0xffaaaaaa);
@@ -51,7 +51,7 @@ public class ButtonTouchListener implements View.OnTouchListener , Serializable{
                             SoundEngineInterface.stop(config.getAudioID());
                             SoundEngineInterface.play(config.getAudioID());
                             v.setBackgroundColor(0xff00ff00);
-                           
+
                         }
                     }
             }else if(Main.getMode()==MainActivity.CONFIGMODE){
@@ -64,11 +64,10 @@ public class ButtonTouchListener implements View.OnTouchListener , Serializable{
                 if(config!=null){
                     if(config.getMode()==LaunchButtonConfig.SIMPLEMODE) {
                         v.setBackgroundColor(0xffaaaaaa);
-                        
+
                     }else if(config.getMode()==LaunchButtonConfig.HOLDMODE){
                         SoundEngineInterface.stop(config.getAudioID());
                         v.setBackgroundColor(0xffaaaaaa);
-                        
                     }
                 }
             }
