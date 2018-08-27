@@ -36,22 +36,21 @@ public class ButtonTouchListener implements View.OnTouchListener , Serializable{
                         if(config.getMode()==LaunchButtonConfig.SIMPLEMODE) {
                             SoundEngineInterface.stop(config.getAudioID());
                             SoundEngineInterface.play(config.getAudioID());
-                            v.setBackgroundColor(0xff00ff00);
+                            v.setBackgroundColor(LaunchButtonConfig.PRESSCOLOR);
 
                         }else if(config.getMode()==LaunchButtonConfig.LOOPMODE){
                             if(SoundEngineInterface.isStopped(config.getAudioID())==true){
                                 SoundEngineInterface.play(config.getAudioID());
-                                v.setBackgroundColor(0xff00ff00);
+                                v.setBackgroundColor(LaunchButtonConfig.PRESSCOLOR);
 
                             }else {
                                 SoundEngineInterface.stop(config.getAudioID());
-                                v.setBackgroundColor(0xffaaaaaa);
+                                v.setBackgroundColor(LaunchButtonConfig.RELEASECOLOR);
                             }
                         }else if(config.getMode()==LaunchButtonConfig.HOLDMODE){
                             SoundEngineInterface.stop(config.getAudioID());
                             SoundEngineInterface.play(config.getAudioID());
-                            v.setBackgroundColor(0xff00ff00);
-
+                            v.setBackgroundColor(LaunchButtonConfig.PRESSCOLOR);
                         }
                     }
             }else if(Main.getMode()==MainActivity.CONFIGMODE){
@@ -63,11 +62,11 @@ public class ButtonTouchListener implements View.OnTouchListener , Serializable{
             if(Main.getMode()==MainActivity.PLAYERMODE ){
                 if(config!=null){
                     if(config.getMode()==LaunchButtonConfig.SIMPLEMODE) {
-                        v.setBackgroundColor(0xffaaaaaa);
+                        v.setBackgroundColor(LaunchButtonConfig.RELEASECOLOR);
 
                     }else if(config.getMode()==LaunchButtonConfig.HOLDMODE){
                         SoundEngineInterface.stop(config.getAudioID());
-                        v.setBackgroundColor(0xffaaaaaa);
+                        v.setBackgroundColor(LaunchButtonConfig.RELEASECOLOR);
                     }
                 }
             }

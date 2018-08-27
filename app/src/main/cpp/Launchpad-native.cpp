@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <string>
 #include <vector>
+#include <android/log.h>
 // for native audio
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_Android.h>
@@ -398,8 +399,10 @@ extern "C"
 JNIEXPORT jint JNICALL
 Java_com_rgp_launchpad_classes_SoundEngineInterface_createAudioDataSourceFromURI(JNIEnv *env,
                                                                                  jobject instance,
-                                                                                 jstring filename_) {
-    const char *filename = env->GetStringUTFChars(filename_, 0);
+                                                                                 jbyteArray filename_,
+                                                                                 jint length) {
+    //const char *filename = env->GetStringUTFChars(filename_, 0);
+    const jbyte *filename = env->GetByteArrayElements(filename_,0);
     jint index= lastindexaudiosample+1 ;
     for (jint i = 0; i <= lastindexaudiosample; ++i) {
         if (audiosources[i] == NULL) {
@@ -413,15 +416,16 @@ Java_com_rgp_launchpad_classes_SoundEngineInterface_createAudioDataSourceFromURI
         lastindexaudiosample=index ;
     }
 
-        audiosamples[index].loc_fd =(SLDataLocator_URI*) malloc(sizeof(SLDataLocator_URI));
-        char* path=NULL ;
-        CatStrings("file://",filename,&path);
+    audiosamples[index].loc_fd =(SLDataLocator_URI*) malloc(sizeof(SLDataLocator_URI));
+    char* path=NULL ;
+    ((char*)filename)[length]='\0';//remove the unnecessary part
+    CatStrings("file://",(char*)filename,&path);
+    __android_log_print(ANDROID_LOG_DEBUG,"no tag"," \npath : \n%s",path);
+    if(path)
         (*((SLDataLocator_URI*)audiosamples[index].loc_fd))={SL_DATALOCATOR_URI,(SLchar*)path};
         audiosamples[index].locatortype=1;
         audiosamples[index].format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
         audiosamples[index].source = {(audiosamples[index].loc_fd), &(audiosamples[index].format_mime)};
-        env->ReleaseStringUTFChars(filename_, filename);
-    env->ReleaseStringUTFChars(filename_, filename);
         return index+1 ;
 
 }

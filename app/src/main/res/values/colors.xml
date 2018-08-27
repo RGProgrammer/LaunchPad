@@ -3,8 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="launchpad">#464646</color>
-    <color name="player">#242424</color>
-
     <color name="black_overlay">#66000000</color>
+
+    <color name="background">#ffffffff</color>
+    <color name="btPressed">#ff00ff00</color>
+    <color name="btReleased">#ffaaaaaa</color>
 </resources>

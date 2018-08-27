@@ -112,6 +112,7 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
                  }else{
                     if(file.getName().endsWith(".mp3")|| file.getName().endsWith(".wav")){
                         Intent res= new Intent();
+                        path.replace("/","//");
                         res.putExtra("path",path);
                         setResult(RESULT_OK,res);
                         finish();

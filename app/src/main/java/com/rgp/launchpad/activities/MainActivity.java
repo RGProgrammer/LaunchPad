@@ -16,6 +16,8 @@ import com.rgp.launchpad.classes.LaunchButtonConfig;
 import com.rgp.launchpad.classes.SoundEngineInterface;
 import com.rgp.launchpad.launchpad.R;
 
+import java.io.UnsupportedEncodingException;
+
 public class MainActivity extends Activity{
 
     // Used to load the 'native-lib' library on application startup.
@@ -32,12 +34,17 @@ public class MainActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // init audio engine
         int error=SoundEngineInterface.initAudioEngine(this.getAssets()) ;
         Toast.makeText(this,"error init engine",Toast.LENGTH_LONG);
         mode=PLAYERMODE ;
+
+        //applying default config to the launch buttons
         ButtonTouchListener.ButtonListener.setMainActivity(this);
         this.InitLaunchButtonsConfig();
         this.InitLaunchButtonsListener();
+
+        //other ui config
         ((ImageView)findViewById(R.id.returnbutton)).setVisibility(View.INVISIBLE);
         //controls
         // STOP ALL button
@@ -111,8 +118,12 @@ public class MainActivity extends Activity{
     }
 
     private void InitLaunchButtonsConfig(){
+        LaunchButtonConfig.PRESSCOLOR=getResources().getColor(R.color.btPressed);
+        LaunchButtonConfig.RELEASECOLOR=getResources().getColor(R.color.btReleased);
         LaunchButtonConfig config=null ;
 
+
+        //since the views IDs can't be changed manually (we can't but consecutive IDs) , using loops is not a possibilty .
         config = new LaunchButtonConfig(((Button) findViewById(R.id.source1)), 0, SoundEngineInterface.createAudioPlayer(0));
         LaunchButtonConfig.list.add(config);
         config = new LaunchButtonConfig(((Button) findViewById(R.id.source2)), 0, SoundEngineInterface.createAudioPlayer(0));
@@ -203,14 +214,19 @@ public class MainActivity extends Activity{
         ConfigApply(requestCode,playmode,path);
     }
 
-        public void  ConfigApply(int audioid, int mode , String path ) {
+    public void  ConfigApply(int audioid, int mode , String path ) {
             if(path!=null) {
                 if (path.endsWith(".mp3") || path.endsWith(".wav")) {
                     SoundEngineInterface.deleteAudioDataSource(audioid);
                     SoundEngineInterface.deleteAudioplayer(audioid);
-                    int sample = SoundEngineInterface.createAudioDataSourceFromURI(path.replace(" ","\u20"));
                     int player = 0;
-                    player=SoundEngineInterface.createAudioPlayer(sample);
+                    int sample = 0;
+                    try {
+                        sample = SoundEngineInterface.createAudioDataSourceFromURI(path.getBytes("UTF-8"),path.length());
+                        player=SoundEngineInterface.createAudioPlayer(sample);
+                    } catch (UnsupportedEncodingException e) {
+                        player=SoundEngineInterface.createAudioPlayer(0);
+                    }
                     if(player==0 )
                         SoundEngineInterface.createAudioPlayer(0);
                     for (int i = 0; i < LaunchButtonConfig.list.size(); ++i) {
@@ -232,6 +248,6 @@ public class MainActivity extends Activity{
                     break ;
                 }
             }
-        }
+    }
 
 }

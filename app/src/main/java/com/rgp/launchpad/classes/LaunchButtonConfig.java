@@ -1,15 +1,26 @@
 package com.rgp.launchpad.classes;
+import android.app.Activity;
 import android.widget.Button;
+
+import com.rgp.launchpad.launchpad.R;
+
 import java.util.ArrayList;
 
 public class LaunchButtonConfig {
     public static final int         SIMPLEMODE = 0;
     public static final int         HOLDMODE   =1 ;
     public static final int         LOOPMODE   =2;
+
+
     private int button_pageid;
     private Button  buttonRef;
     private int button_audioid;
     private int mode ;
+
+
+    public  static int PRESSCOLOR;
+    public  static int RELEASECOLOR ;
+
     public static ArrayList<LaunchButtonConfig> list=new ArrayList<LaunchButtonConfig>();
     public static LaunchButtonConfig getButtonConfig(Button button_id,int page_id){
         for(int i =0 ; i< list.size();i++)
@@ -26,6 +37,7 @@ public class LaunchButtonConfig {
         this.button_pageid= page_id ;
         this.button_audioid= audio_id ;
         mode=SIMPLEMODE;
+
     }
     public void setAudioID(int id){
         button_audioid=id;
