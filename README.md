@@ -3,7 +3,7 @@
 ##Description
 
 This is on open source project made to simulate most(not all) of the real Launchpad experience.
-This project is an educationnal project to learn android application developement using both of the SDK and the NDK.
+This project is an educational project to learn android application developement using both of the SDK and the NDK.
 
 
 ##Licence
