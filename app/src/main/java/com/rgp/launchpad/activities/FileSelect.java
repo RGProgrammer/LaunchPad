@@ -31,12 +31,15 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
         list=((ListView)findViewById(R.id.listview));
         ArrayList<String> titles=new ArrayList<String>();
         titles.add("Internal");
-        titles.add("SD Card");
+        if(this.getExternalFilesDir(null)!=null) {
+            titles.add("SD Card");
+        }
 
         mylayout= new ListLayout(this,R.layout.row,titles);
         list.setAdapter(mylayout);
         list.setOnItemClickListener(this);
     }
+
     private class ListLayout extends ArrayAdapter<String>
     {
         private ArrayList<String> Titles ;
@@ -98,7 +101,7 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
                 if(position==0){
                     path= Environment.getExternalStorageDirectory().getPath();
                 }else if(position==1){
-                    path= "/storage/sdcard0";
+                    path= this.getExternalFilesDir(null).getPath();
                 }
             }else{
                 path=path+"/"+mylayout.getItem(position);
@@ -119,5 +122,45 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
                     }
                  }
     }
-}
+
+    @Override
+    public void onBackPressed() {
+        if(path==""){
+             setResult(RESULT_CANCELED);
+            finish();
+        }
+
+        if(path== Environment.getExternalStorageDirectory().getPath() ||
+                this.getExternalFilesDir(null).getPath()== path){
+            path="";
+            mylayout.clear();
+            mylayout.add("Internal");
+            if(this.getExternalFilesDir(null)!=null) {
+                mylayout.add("SD Card");
+            }
+            mylayout.notifyDataSetChanged();
+        }else{
+            File file= new File(path);
+            File Parent = file.getParentFile();
+            if(Parent!=null){
+                path=Parent.getPath();
+                if(path.contains( Environment.getExternalStorageDirectory().getPath())== true ||
+                        path.contains( this.getExternalFilesDir(null).getPath())== true){
+                    String[] files = Parent.list();
+                    mylayout.UpdateList(files);
+                    mylayout.notifyDataSetChanged();
+                }else {
+                    path="";
+                    mylayout.clear();
+                    mylayout.add("Internal");
+                    if(this.getExternalFilesDir(null)!=null) {
+                        mylayout.add("SD Card");
+                    }
+                    mylayout.notifyDataSetChanged();
+                }
+            }
+        }
+
+    } 
+} 
 
