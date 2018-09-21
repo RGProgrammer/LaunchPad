@@ -21,6 +21,8 @@ import android.content.Intent;
 
 public class FileSelect extends Activity implements AdapterView.OnItemClickListener {
     private File currentfile;
+    private String InternalStoragePath =null;
+    private String ExternalStoragePath =null;
     private String  path="" ;
     ListView  list ;
     ListLayout mylayout;
@@ -30,8 +32,11 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
         setContentView(R.layout.activity_file_select);
         list=((ListView)findViewById(R.id.listview));
         ArrayList<String> titles=new ArrayList<String>();
+        InternalStoragePath= Environment.getExternalStorageDirectory().getPath();
         titles.add("Internal");
-        if(this.getExternalFilesDir(null)!=null) {
+        File external=this.getExternalFilesDir(null);
+        if(external.list().length>0){
+            ExternalStoragePath=external.getPath();
             titles.add("SD Card");
         }
 
@@ -99,9 +104,9 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
            String tmp ;
             if(path==""){
                 if(position==0){
-                    path= Environment.getExternalStorageDirectory().getPath();
+                    path= InternalStoragePath;
                 }else if(position==1){
-                    path= this.getExternalFilesDir(null).getPath();
+                    path= ExternalStoragePath;
                 }
             }else{
                 path=path+"/"+mylayout.getItem(position);
@@ -130,12 +135,12 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
             finish();
         }
 
-        if(path== Environment.getExternalStorageDirectory().getPath() ||
-                this.getExternalFilesDir(null).getPath()== path){
+        if(path== InternalStoragePath ||
+                ExternalStoragePath== path){
             path="";
             mylayout.clear();
             mylayout.add("Internal");
-            if(this.getExternalFilesDir(null)!=null) {
+            if(ExternalStoragePath!=null){
                 mylayout.add("SD Card");
             }
             mylayout.notifyDataSetChanged();
@@ -144,8 +149,8 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
             File Parent = file.getParentFile();
             if(Parent!=null){
                 path=Parent.getPath();
-                if(path.contains( Environment.getExternalStorageDirectory().getPath())== true ||
-                        path.contains( this.getExternalFilesDir(null).getPath())== true){
+                if(path.contains(InternalStoragePath)== true ||
+                        (ExternalStoragePath !=null &&path.contains( ExternalStoragePath)== true)){
                     String[] files = Parent.list();
                     mylayout.UpdateList(files);
                     mylayout.notifyDataSetChanged();
@@ -153,7 +158,7 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
                     path="";
                     mylayout.clear();
                     mylayout.add("Internal");
-                    if(this.getExternalFilesDir(null)!=null) {
+                    if(ExternalStoragePath!=null){
                         mylayout.add("SD Card");
                     }
                     mylayout.notifyDataSetChanged();

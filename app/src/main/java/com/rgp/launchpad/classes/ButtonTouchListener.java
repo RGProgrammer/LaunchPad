@@ -29,7 +29,7 @@ public class ButtonTouchListener implements View.OnTouchListener , Serializable{
     public boolean onTouch(View v, MotionEvent event) {
         if(Main==null)
             return false ;
-        LaunchButtonConfig config=config = LaunchButtonConfig.getButtonConfig((Button) v, MainActivity.getSelectedPage());
+        LaunchButtonConfig config= LaunchButtonConfig.getButtonConfig(v.getId(), MainActivity.getSelectedPage());
         if(event.getAction()==MotionEvent.ACTION_DOWN) {
             if(Main.getMode()==MainActivity.PLAYERMODE) {
                     if (config != null) {

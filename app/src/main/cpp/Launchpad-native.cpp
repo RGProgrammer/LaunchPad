@@ -439,3 +439,19 @@ Java_com_rgp_launchpad_classes_SoundEngineInterface_deleteAudioDataSource(JNIEnv
     audiosamples[data_id-1].source={NULL,NULL};
     return true ;
 }
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_rgp_launchpad_classes_SoundEngineInterface_getPath(JNIEnv *env, jobject instance,
+                                                            jint button_audioid) {
+
+    // TODO
+
+
+    char *returnValue=NULL;
+    if(button_audioid>=1 || button_audioid<=MAX_AUDIO_SOURCES){
+        if(audiosamples[button_audioid-1].locatortype==1){
+            returnValue=((char*)((SLDataLocator_URI*)(audiosamples[button_audioid-1].loc_fd))->URI)+7;
+        }
+    }
+    return env->NewStringUTF(returnValue);
+}

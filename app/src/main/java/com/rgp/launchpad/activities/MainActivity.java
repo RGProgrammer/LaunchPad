@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -41,8 +43,9 @@ public class MainActivity extends Activity{
 
         //applying default config to the launch buttons
         ButtonTouchListener.ButtonListener.setMainActivity(this);
-        this.InitLaunchButtonsConfig();
+
         this.InitLaunchButtonsListener();
+        this.InitLaunchButtonsConfig();
 
         //other ui config
         ((ImageView)findViewById(R.id.returnbutton)).setVisibility(View.INVISIBLE);
@@ -69,12 +72,14 @@ public class MainActivity extends Activity{
         ((ImageView)findViewById(R.id.returnbutton)).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                SoundEngineInterface.stopAll();
+
+                LaunchButtonConfig.ExportConfigtoFile();
                 MainActivity.this.switchMode(PLAYERMODE);
                 Toast.makeText(MainActivity.this,"PLAYERMODE",Toast.LENGTH_SHORT);
                 ((ImageView)findViewById(R.id.config)).setVisibility(View.VISIBLE);
                 ((Button)findViewById(R.id.stopall)).setVisibility(View.VISIBLE);
                 ((ImageView)findViewById(R.id.returnbutton)).setVisibility(View.INVISIBLE);
+
             }
         } );
 
@@ -112,6 +117,7 @@ public class MainActivity extends Activity{
     }
   
     public void onDestroy(){
+
         SoundEngineInterface.stopAll();
         SoundEngineInterface.releaseAudioEngine();
         super.onDestroy();
@@ -120,60 +126,36 @@ public class MainActivity extends Activity{
     private void InitLaunchButtonsConfig(){
         LaunchButtonConfig.PRESSCOLOR=getResources().getColor(R.color.btPressed);
         LaunchButtonConfig.RELEASECOLOR=getResources().getColor(R.color.btReleased);
-        LaunchButtonConfig config=null ;
 
+        LaunchButtonConfig.ButtonIds.add(R.id.source1);
+        LaunchButtonConfig.ButtonIds.add(R.id.source2);
+        LaunchButtonConfig.ButtonIds.add(R.id.source3);
+        LaunchButtonConfig.ButtonIds.add(R.id.source4);
+        LaunchButtonConfig.ButtonIds.add(R.id.source5);
+        LaunchButtonConfig.ButtonIds.add(R.id.source6);
+        LaunchButtonConfig.ButtonIds.add(R.id.source7);
+        LaunchButtonConfig.ButtonIds.add(R.id.source8);
+        LaunchButtonConfig.ButtonIds.add(R.id.source9);
+        LaunchButtonConfig.ButtonIds.add(R.id.source10);
+        LaunchButtonConfig.ButtonIds.add(R.id.source11);
+        LaunchButtonConfig.ButtonIds.add(R.id.source12);
+            if(LaunchButtonConfig.ImportConfigfromFile()==false || LaunchButtonConfig.list.size()==0){
 
-        //since the views IDs can't be changed manually (we can't but consecutive IDs) , using loops is not a possibilty .
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source1)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source2)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source3)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source4)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source5)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source6)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source7)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source8)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source9)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source10)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source11)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source12)), 0, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source1)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source2)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source3)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source4)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source5)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source6)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source7)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source8)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source9)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source10)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source11)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-        config = new LaunchButtonConfig(((Button) findViewById(R.id.source12)), 1, SoundEngineInterface.createAudioPlayer(0));
-        LaunchButtonConfig.list.add(config);
-
+                LaunchButtonConfig. ClearCurrentConfig();
+                LaunchButtonConfig config=null ;
+                // page 1
+                for (int i=0 ; i<LaunchButtonConfig.ButtonIds.size();++i){
+                  config = new LaunchButtonConfig(i, 0, SoundEngineInterface.createAudioPlayer(0));
+                  LaunchButtonConfig.list.add(config);
+                 }
+                 //page2
+                 for (int i=0 ; i<LaunchButtonConfig.ButtonIds.size();++i){
+                    config = new LaunchButtonConfig(i, 1, SoundEngineInterface.createAudioPlayer(0));
+                    LaunchButtonConfig.list.add(config);
+                }
+            }else {
+                Toast.makeText(this, "loaded last config", Toast.LENGTH_LONG).show();
+            }
     }
     private void InitLaunchButtonsListener(){
 
