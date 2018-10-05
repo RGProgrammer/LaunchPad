@@ -130,7 +130,7 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
 
     @Override
     public void onBackPressed() {
-        if(path==""){
+        if(path.equals("") || path.equals("/")){
              setResult(RESULT_CANCELED);
             finish();
         }
@@ -150,7 +150,7 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
             if(Parent!=null){
                 path=Parent.getPath();
                 if(path.contains(InternalStoragePath)== true ||
-                        (ExternalStoragePath !=null &&path.contains( ExternalStoragePath)== true)){
+                        (ExternalStoragePath !=null && path.contains( ExternalStoragePath)== true)){
                     String[] files = Parent.list();
                     mylayout.UpdateList(files);
                     mylayout.notifyDataSetChanged();

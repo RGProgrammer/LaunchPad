@@ -15,7 +15,6 @@ public class SoundEngineInterface {
     public static native boolean   isPlaying(int audioplayer_id);
     public static native boolean   isStopped(int audioplayer_id);
     public static native boolean   isLooping(int audioplayer_id);
-    public static native int       createAudioDataSourceFromAssets(String filename);
     public static native int       createAudioDataSourceFromURI(byte[] filename,int length);
     public static native boolean   deleteAudioDataSource(int data_id);
     public static native String    getPath(int button_audioid) ;

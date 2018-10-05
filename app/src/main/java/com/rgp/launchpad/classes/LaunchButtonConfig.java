@@ -128,12 +128,14 @@ public class LaunchButtonConfig {
             int Pageid = 0;
             int Mode = 0;
             boolean tag=false ;
-            String Path = null;
+            String Path =null;
             while ((eventType = parser.getEventType()) != XmlPullParser.END_DOCUMENT ) {
 
                 if (eventType == XmlPullParser.START_TAG) {
                     tag=true;
+                    Path=null ;
                     if (parser.getName().equals("buttonconfig")==true) {
+
                         Buttonid = Integer.parseInt(parser.getAttributeValue("", "buttonID"));
                         Pageid = Integer.parseInt(parser.getAttributeValue("", "pageID"));
                         Path = parser.getAttributeValue("", "path");
