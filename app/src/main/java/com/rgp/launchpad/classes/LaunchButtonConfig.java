@@ -140,10 +140,12 @@ public class LaunchButtonConfig {
                         Pageid = Integer.parseInt(parser.getAttributeValue("", "pageID"));
                         Path = parser.getAttributeValue("", "path");
                         Mode = Integer.parseInt(parser.getAttributeValue("", "mode"));
-
+                        //check the file still exists
                         int sample = 0;
                         if (Path != null && Path.equals("") == false) {
-                            sample = SoundEngineInterface.createAudioDataSourceFromURI(Path.getBytes("UTF-8"), Path.length());
+                            File file= new File(Path);
+                            if(file.exists())
+                                sample = SoundEngineInterface.createAudioDataSourceFromURI(Path.getBytes("UTF-8"), Path.length());
                         }
                         int audio = SoundEngineInterface.createAudioPlayer(sample);
 

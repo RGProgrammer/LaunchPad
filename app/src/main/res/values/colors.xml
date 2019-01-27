@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="black_overlay">#66000000</color>
 
-    <color name="background">#ffffffff</color>
-    <color name="btPressed">#ff00ff00</color>
-    <color name="btReleased">#ffaaaaaa</color>
+    <color name="background">#ff989599</color>
+    <color name="btPressed">#ffd66af7</color>
+    <color name="btReleased">#ff9c11c6</color>
 </resources>

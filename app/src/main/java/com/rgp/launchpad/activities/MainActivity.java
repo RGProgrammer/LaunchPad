@@ -139,23 +139,12 @@ public class MainActivity extends Activity{
         LaunchButtonConfig.ButtonIds.add(R.id.source10);
         LaunchButtonConfig.ButtonIds.add(R.id.source11);
         LaunchButtonConfig.ButtonIds.add(R.id.source12);
-            if(LaunchButtonConfig.ImportConfigfromFile()==false || LaunchButtonConfig.list.size()==0){
-
-                LaunchButtonConfig. ClearCurrentConfig();
-                LaunchButtonConfig config=null ;
-                // page 1
-                for (int i=0 ; i<LaunchButtonConfig.ButtonIds.size();++i){
-                  config = new LaunchButtonConfig(i, 0, SoundEngineInterface.createAudioPlayer(0));
-                  LaunchButtonConfig.list.add(config);
-                 }
-                 //page2
-                 for (int i=0 ; i<LaunchButtonConfig.ButtonIds.size();++i){
-                    config = new LaunchButtonConfig(i, 1, SoundEngineInterface.createAudioPlayer(0));
-                    LaunchButtonConfig.list.add(config);
-                }
-            }else {
+            if(LaunchButtonConfig.ImportConfigfromFile()){
                 Toast.makeText(this, "loaded last config", Toast.LENGTH_LONG).show();
+            }else {
+                Toast.makeText(this, "no config found", Toast.LENGTH_LONG).show();
             }
+
     }
     private void InitLaunchButtonsListener(){
 
@@ -209,14 +198,13 @@ public class MainActivity extends Activity{
                     } catch (UnsupportedEncodingException e) {
                         player=SoundEngineInterface.createAudioPlayer(0);
                     }
-                    if(player==0 )
-                        SoundEngineInterface.createAudioPlayer(0);
-                    for (int i = 0; i < LaunchButtonConfig.list.size(); ++i) {
-                        if (LaunchButtonConfig.list.get(i).getAudioID() == audioid) {
-                            LaunchButtonConfig.list.get(i).setAudioID(player);
-                            break;
+                    if(player !=0 )
+                        for (int i = 0; i < LaunchButtonConfig.list.size(); ++i) {
+                            if (LaunchButtonConfig.list.get(i).getAudioID() == audioid) {
+                                LaunchButtonConfig.list.get(i).setAudioID(player);
+                             break;
+                            }
                         }
-                    }
                 }
             }
             for (int i=0;i< LaunchButtonConfig.list.size();++i){

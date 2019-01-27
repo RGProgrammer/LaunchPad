@@ -29,6 +29,7 @@ typedef  struct {
 static SLObjectItf      audioengine=NULL ;
 static SLEngineItf      audioInterface ;
 static AAssetManager    *mgr=NULL ;
+static jboolean         isInitialized= false ;
 //outputMix
 static SLObjectItf         outputmixer =NULL;
 
@@ -37,15 +38,15 @@ SLDataLocator_AndroidFD loc_fd ;
 SLDataFormat_MIME format_mime ;
 SLDataLocator_OutputMix loc_outmix;
 static SLDataSink defaultaudioSnk={NULL,NULL};
-static SLDataSource defaultsample={NULL,NULL} ;
+//static SLDataSource defaultsample={NULL,NULL} ;
 
 //audio sources
-const jint MAX_AUDIO_SOURCES = 24;
+const jint MAX_AUDIO_SOURCES = 25;
 static jint lastindexaudiosource = 0 ;
 static AudioPlayerStruct audiosources[MAX_AUDIO_SOURCES];
 //audio samples
 
-const jint MAX_AUDIO_SAMPLES = 24;
+const jint MAX_AUDIO_SAMPLES = 25;
 static jint lastindexaudiosample = 0 ;
 static AudioSourceStruct audiosamples[MAX_AUDIO_SAMPLES];
 
@@ -141,7 +142,7 @@ Java_com_rgp_launchpad_classes_SoundEngineInterface_initAudioEngine(JNIEnv *env,
     }
   
     //init default audio sample
-   AAsset *asset = AAssetManager_open(mgr, "default.mp3", AASSET_MODE_UNKNOWN);
+   /*AAsset *asset = AAssetManager_open(mgr, "default.mp3", AASSET_MODE_UNKNOWN);
     assert(asset);
     if(!asset) {
         return 8;
@@ -156,20 +157,26 @@ Java_com_rgp_launchpad_classes_SoundEngineInterface_initAudioEngine(JNIEnv *env,
 
     loc_fd = {SL_DATALOCATOR_ANDROIDFD, fd, start, length};
     format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
-    defaultsample = {&loc_fd, &format_mime};
+    defaultsample = {&loc_fd, &format_mime};*/
 
     // configure audio sink
     loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, outputmixer};
 
     defaultaudioSnk = {&loc_outmix, NULL};
-    
+    isInitialized= true ;
     return 0 ;
 }
+extern "C"
+JNIEXPORT jboolean   Java_com_rgp_launchpad_classes_SoundEngineInterface_isInitialized()
+{
+    return isInitialized ;
+};
 
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_rgp_launchpad_classes_SoundEngineInterface_releaseAudioEngine(JNIEnv *env, jobject instance) {
     DestroyAll();
+    isInitialized=false ;
 }
 
 extern "C"
@@ -195,10 +202,11 @@ Java_com_rgp_launchpad_classes_SoundEngineInterface_createAudioPlayer(JNIEnv *en
     const SLInterfaceID ids[2] = {SL_IID_PLAY,SL_IID_SEEK};
     const SLboolean req[2] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
     if(data_id < 1 || data_id>lastindexaudiosample+1) {
-        res = (*audioInterface)->CreateAudioPlayer(audioInterface,
+        /*res = (*audioInterface)->CreateAudioPlayer(audioInterface,
                                                    &(audiosources[index].audioplayer),
                                                    &defaultsample, &defaultaudioSnk, 2, ids, req);
-        audiosources[index].data_id = 0;
+        audiosources[index].data_id = 0;*/
+        return 0 ;
     }else {
         res = (*audioInterface)->CreateAudioPlayer(audioInterface,
                                                    &(audiosources[index].audioplayer),
@@ -459,8 +467,6 @@ extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_rgp_launchpad_classes_SoundEngineInterface_getPath(JNIEnv *env, jobject instance,
                                                             jint button_audioid) {
-
-    // TODO
 
 
     char *returnValue=NULL;

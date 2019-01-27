@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 public class SoundEngineInterface {
 
     public static native int       initAudioEngine(AssetManager mgr);
+    public static native boolean   isInitialized();
     public static native void      releaseAudioEngine();
     public static native int       createAudioPlayer(int data_id);
     public static native boolean   deleteAudioplayer(int sourceId);

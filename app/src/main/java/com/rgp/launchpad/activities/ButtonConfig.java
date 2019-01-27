@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.rgp.launchpad.classes.LaunchButtonConfig;
+import com.rgp.launchpad.classes.SoundEngineInterface;
 import com.rgp.launchpad.launchpad.R;
 
 import javax.xml.transform.Result;
@@ -20,6 +21,8 @@ import javax.xml.transform.Result;
  */
 public class ButtonConfig extends Activity {
     Intent resultintent ;
+    int previewAudioID = 0;
+    int previewAudioData =0 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +42,22 @@ public class ButtonConfig extends Activity {
                     mode= LaunchButtonConfig.LOOPMODE;
 
                 resultintent.putExtra("mode",mode);
+
                 setResult(RESULT_OK, resultintent);
+                SoundEngineInterface.stop(previewAudioID);
+                SoundEngineInterface.deleteAudioDataSource(previewAudioData);
+                SoundEngineInterface.deleteAudioplayer(previewAudioID);
                 finish();
             }
         });
 
+        ((Button)findViewById(R.id.Play)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                SoundEngineInterface.play(previewAudioID);
+            }
+        });
 
         ((Button)findViewById(R.id.selection)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,13 +67,33 @@ public class ButtonConfig extends Activity {
             }
         });
 
+
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Toast.makeText(this,"checking result ",Toast.LENGTH_LONG).show();
         if(resultCode== RESULT_OK && data != null){
-            String path= data.getExtras().getString("path");
-            Toast.makeText(this,"path "+path,Toast.LENGTH_LONG).show();
-            resultintent.putExtra("path",path);
+            //delete old preview wdata preparing for the new data
+            SoundEngineInterface.deleteAudioDataSource(previewAudioData);
+            SoundEngineInterface.deleteAudioplayer(previewAudioID);
+            previewAudioID = 0;
+            previewAudioData =0 ;
+            String Path= data.getExtras().getString("path");
+            Toast.makeText(this,"path "+Path,Toast.LENGTH_SHORT).show();
+            resultintent.putExtra("path",Path);
+            if(SoundEngineInterface.isInitialized()) {
+                try {
+                    previewAudioData = SoundEngineInterface.createAudioDataSourceFromURI(Path.getBytes("UTF-8"), Path.length());
+                    previewAudioID=SoundEngineInterface.createAudioPlayer(previewAudioID);
+                    if(previewAudioData==0)
+                        Toast.makeText(this,"cannot preview audio",Toast.LENGTH_LONG);
+                    else{
+                        Toast.makeText(this,"preview is ready",Toast.LENGTH_LONG).show();
+                    }
+                }catch ( Exception e){
+                    Toast.makeText(this,"error decoding filename",Toast.LENGTH_LONG).show();
+                }
+            }else{
+                Toast.makeText(this,"cannot preview audio",Toast.LENGTH_LONG).show();
+            }
         }else{
             this.setResult(RESULT_CANCELED);
 
