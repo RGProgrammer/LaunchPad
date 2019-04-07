@@ -89,7 +89,8 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
                 if(current.isDirectory())
                     icon.setImageResource(folderIcon);
                 else if(current.isFile()){
-                    if(current.getName().endsWith(".mp3") || current.getName().endsWith(".wav") )
+                    if(current.getName().endsWith(".mp3") || current.getName().endsWith(".wav") ||  current.getName().endsWith(".ogg")||
+                            current.getName().endsWith(".MP3") || current.getName().endsWith(".WAV") ||  current.getName().endsWith(".OGG"))
                         icon.setImageResource(audioIcon);
                     else
                         icon.setImageResource(otherIcon);
@@ -118,7 +119,8 @@ public class FileSelect extends Activity implements AdapterView.OnItemClickListe
                      mylayout.UpdateList(files);
                      mylayout.notifyDataSetChanged();
                  }else{
-                    if(file.getName().endsWith(".mp3")|| file.getName().endsWith(".wav")){
+                    if(file.getName().endsWith(".mp3") || file.getName().endsWith(".wav") ||  file.getName().endsWith(".ogg")||
+                            file.getName().endsWith(".MP3") || file.getName().endsWith(".WAV") ||  file.getName().endsWith(".OGG")){
                         Intent res= new Intent();
                         path.replace("/","//");
                         res.putExtra("path",path);

@@ -36,9 +36,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.rgp.launchpad.activities.FileSelect"
-            android:label="Select a file ">
+        <activity android:name="com.rgp.launchpad.activities.FileSelect"
+            android:label="Select a file "
+            >
             <intent-filter>
                 <action android:name="android.intent.action.FileSelect" />
 

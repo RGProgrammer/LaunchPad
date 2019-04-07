@@ -15,13 +15,11 @@
 
     <Button
         android:id="@+id/selection"
-        android:layout_width="444dp"
+        android:layout_width="370dp"
         android:layout_height="36dp"
-        android:layout_marginStart="252dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="252dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
         android:text="Select a file ..."
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,10 +34,9 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
         android:layout_width="0dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:checkedButton="@+id/simplemode"
         android:orientation="horizontal"
         android:scrollbarAlwaysDrawHorizontalTrack="false"
@@ -77,15 +74,14 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/Play"
-        android:layout_width="227dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="265dp"
+        android:id="@+id/preview"
+        android:layout_width="142dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="264dp"
-        android:text="preview"
+        android:layout_marginEnd="8dp"
+        android:text="Preview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
+        app:layout_constraintStart_toEndOf="@+id/selection"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

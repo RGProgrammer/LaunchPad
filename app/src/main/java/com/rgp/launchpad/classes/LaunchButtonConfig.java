@@ -42,11 +42,17 @@ public class LaunchButtonConfig {
     private int audioid;
     private int mode ;
 
-    //STATIC
     public  static int PRESSCOLOR;
     public  static int RELEASECOLOR ;
     public static ArrayList<Integer> ButtonIds = new ArrayList<Integer>();
     public static ArrayList<LaunchButtonConfig> list=new ArrayList<LaunchButtonConfig>();
+    public static LaunchButtonConfig getButtonConfig(int ConfigIndex)
+    {
+        if(ConfigIndex>= list.size())
+            return null ;
+        return list.get(ConfigIndex);
+
+    }
     public static LaunchButtonConfig getButtonConfig(int button_id,int page_id)
     {
         int wrapper=0,i=0 ;
@@ -63,15 +69,21 @@ public class LaunchButtonConfig {
         return null ;
     }
 
+    public static int getButtonConfigIndex(LaunchButtonConfig config)
+    {
+        for(int i=0 ; i< list.size();++i){
+            if(config==list.get(i))
+                return i ;
+        }
+        return -1 ;
+    }
+
     public static boolean AddConfig(int button,int page_id, int audio_id, int mode){
         LaunchButtonConfig c = new LaunchButtonConfig(button,page_id,audio_id);
-        if(c!=null) {
-            c.setMode(mode);
-            list.add(c);
-            return true ;
+        c.setMode(mode);
+        list.add(c);
 
-        }
-        return false ;
+        return true ;
     }
 
     public static boolean ExportConfigtoFile()
@@ -113,8 +125,7 @@ public class LaunchButtonConfig {
         try {
             //opening and reading config file content
            in= new FileInputStream(Environment.getExternalStorageDirectory().getPath() + "/Audio/launchpadconig.xml");
-            if (in == null)
-                return false;
+
             //parsing content and adding config
             factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(false);
@@ -127,29 +138,25 @@ public class LaunchButtonConfig {
             int Buttonid = 0;
             int Pageid = 0;
             int Mode = 0;
-            boolean tag=false ;
             String Path =null;
             while ((eventType = parser.getEventType()) != XmlPullParser.END_DOCUMENT ) {
 
                 if (eventType == XmlPullParser.START_TAG) {
-                    tag=true;
-                    Path=null ;
-                    if (parser.getName().equals("buttonconfig")==true) {
+
+                    if (parser.getName().equals("buttonconfig")) {
 
                         Buttonid = Integer.parseInt(parser.getAttributeValue("", "buttonID"));
                         Pageid = Integer.parseInt(parser.getAttributeValue("", "pageID"));
                         Path = parser.getAttributeValue("", "path");
                         Mode = Integer.parseInt(parser.getAttributeValue("", "mode"));
-                        //check the file still exists
+
                         int sample = 0;
-                        if (Path != null && Path.equals("") == false) {
-                            File file= new File(Path);
-                            if(file.exists())
-                                sample = SoundEngineInterface.createAudioDataSourceFromURI(Path.getBytes("UTF-8"), Path.length());
+                        if (Path != null && !Path.equals("") ) {
+                            sample = SoundEngineInterface.createAudioDataSourceFromURI(Path.getBytes("UTF-8"), Path.length());
                         }
                         int audio = SoundEngineInterface.createAudioPlayer(sample);
 
-                        if(LaunchButtonConfig.AddConfig(Buttonid,Pageid,audio,Mode)==false)
+                        if(!LaunchButtonConfig.AddConfig(Buttonid,Pageid,audio,Mode))
                             return false ;
 
                     }
@@ -173,34 +180,42 @@ public class LaunchButtonConfig {
         LaunchButtonConfig.list.clear();
     }
 
-    //
-    public LaunchButtonConfig(int button,int page_id){
+
+    public LaunchButtonConfig(int button,int page_id)
+    {
         this(button,page_id,0);
     }
-    public LaunchButtonConfig(int button,int page_id, int audio_id){
+    public LaunchButtonConfig(int button,int page_id, int audio_id)
+    {
         this.buttonRef=button ;
         this.pageid= page_id ;
         this.audioid= audio_id ;
         mode=SIMPLEMODE;
 
     }
-    public void setAudioID(int id){
+    public void setAudioID(int id)
+    {
         audioid=id;
     }
-    public void setMode(int mode){
+    public void setMode(int mode)
+    {
         if(mode>=0 && mode<=2)
             this.mode=mode ;
     }
-    public int getMode(){
+    public int getMode()
+    {
         return mode ;
     }
-    public int getAudioID(){
+    public int getAudioID()
+    {
         return this.audioid ;
     }
-    public int getButtonref(){
+    public int getButtonref()
+    {
         return this.buttonRef;
     }
-    public int getPageID(){
+    public int getPageID()
+    {
         return this.pageid;
     }
 }

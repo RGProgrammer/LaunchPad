@@ -39,7 +39,7 @@ public class ButtonTouchListener implements View.OnTouchListener , Serializable{
                             v.setBackgroundColor(LaunchButtonConfig.PRESSCOLOR);
 
                         }else if(config.getMode()==LaunchButtonConfig.LOOPMODE){
-                            if(SoundEngineInterface.isStopped(config.getAudioID())==true){
+                            if(SoundEngineInterface.isStopped(config.getAudioID())){
                                 SoundEngineInterface.play(config.getAudioID());
                                 v.setBackgroundColor(LaunchButtonConfig.PRESSCOLOR);
 
@@ -55,7 +55,11 @@ public class ButtonTouchListener implements View.OnTouchListener , Serializable{
                     }
             }else if(Main.getMode()==MainActivity.CONFIGMODE){
                     Intent configIntent= new Intent("android.intent.action.ButtonConfig");
-                    Main.startActivityForResult(configIntent,config.getAudioID());
+                    if(config!=null) {
+
+                        Main.startActivityForResult(configIntent, LaunchButtonConfig.getButtonConfigIndex(config));
+                    }
+
             }
             return true;
         }else if (event.getAction()==MotionEvent.ACTION_UP){

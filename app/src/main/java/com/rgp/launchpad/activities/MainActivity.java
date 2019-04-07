@@ -93,6 +93,7 @@ public class MainActivity extends Activity{
                 if(event.getAction()==MotionEvent.ACTION_DOWN) {
                     ((ImageView) v).setImageDrawable(getDrawable(R.drawable.active));
                     ((ImageView) findViewById(R.id.page2)).setImageDrawable(getDrawable(R.drawable.deactive));
+                    ((ImageView) findViewById(R.id.page3)).setImageDrawable(getDrawable(R.drawable.deactive));
                     selectedPage = 0;
                     return true;
                 }
@@ -106,7 +107,22 @@ public class MainActivity extends Activity{
                 if(event.getAction()==MotionEvent.ACTION_DOWN) {
                     ((ImageView) v).setImageDrawable(getDrawable(R.drawable.active));
                     ((ImageView) findViewById(R.id.page1)).setImageDrawable(getDrawable(R.drawable.deactive));
+                    ((ImageView) findViewById(R.id.page3)).setImageDrawable(getDrawable(R.drawable.deactive));
                     selectedPage = 1;
+                    return true;
+                }
+                return false;
+            }
+        } );
+
+        ((ImageView)findViewById(R.id.page3)).setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction()==MotionEvent.ACTION_DOWN) {
+                    ((ImageView) v).setImageDrawable(getDrawable(R.drawable.active));
+                    ((ImageView) findViewById(R.id.page1)).setImageDrawable(getDrawable(R.drawable.deactive));
+                    ((ImageView) findViewById(R.id.page2)).setImageDrawable(getDrawable(R.drawable.deactive));
+                    selectedPage = 2;
                     return true;
                 }
                 return false;
@@ -139,12 +155,20 @@ public class MainActivity extends Activity{
         LaunchButtonConfig.ButtonIds.add(R.id.source10);
         LaunchButtonConfig.ButtonIds.add(R.id.source11);
         LaunchButtonConfig.ButtonIds.add(R.id.source12);
-            if(LaunchButtonConfig.ImportConfigfromFile()){
+            if(LaunchButtonConfig.ImportConfigfromFile() ) {
                 Toast.makeText(this, "loaded last config", Toast.LENGTH_LONG).show();
             }else {
-                Toast.makeText(this, "no config found", Toast.LENGTH_LONG).show();
-            }
+                for(int i=0 ; i< 12  ; ++i) {
+                    LaunchButtonConfig.AddConfig(i,0,0,LaunchButtonConfig.SIMPLEMODE);
+                }
+                for(int i=0 ; i< 12  ; ++i) {
+                    LaunchButtonConfig.AddConfig(i,1,0,LaunchButtonConfig.SIMPLEMODE);
+                }
+                for(int i=0 ; i< 12  ; ++i) {
+                    LaunchButtonConfig.AddConfig(i,2,0,LaunchButtonConfig.SIMPLEMODE);
+                }
 
+            }
     }
     private void InitLaunchButtonsListener(){
 
@@ -185,11 +209,12 @@ public class MainActivity extends Activity{
         ConfigApply(requestCode,playmode,path);
     }
 
-    public void  ConfigApply(int audioid, int mode , String path ) {
+    public void  ConfigApply(int configindex, int mode , String path ) {
             if(path!=null) {
-                if (path.endsWith(".mp3") || path.endsWith(".wav")) {
-                    SoundEngineInterface.deleteAudioDataSource(audioid);
-                    SoundEngineInterface.deleteAudioplayer(audioid);
+                if (path.endsWith(".mp3") || path.endsWith(".wav") || path.endsWith(".ogg") ||
+                        path.endsWith(".MP3") || path.endsWith(".WAV") || path.endsWith(".OGG")) {
+                    SoundEngineInterface.deleteAudioDataSource(LaunchButtonConfig.getButtonConfig(configindex).getAudioID());
+                    SoundEngineInterface.deleteAudioplayer(LaunchButtonConfig.getButtonConfig(configindex).getAudioID());
                     int player = 0;
                     int sample = 0;
                     try {
@@ -198,26 +223,18 @@ public class MainActivity extends Activity{
                     } catch (UnsupportedEncodingException e) {
                         player=SoundEngineInterface.createAudioPlayer(0);
                     }
-                    if(player !=0 )
-                        for (int i = 0; i < LaunchButtonConfig.list.size(); ++i) {
-                            if (LaunchButtonConfig.list.get(i).getAudioID() == audioid) {
-                                LaunchButtonConfig.list.get(i).setAudioID(player);
-                             break;
-                            }
-                        }
+                    LaunchButtonConfig.list.get(configindex).setAudioID(player);
+
                 }
             }
-            for (int i=0;i< LaunchButtonConfig.list.size();++i){
-                if(LaunchButtonConfig.list.get(i).getAudioID()==audioid ){
-                    LaunchButtonConfig.list.get(i).setMode(mode);
-                    if(mode==LaunchButtonConfig.LOOPMODE) {
-                        SoundEngineInterface.loop(audioid,true);
-                    }else{
-                        SoundEngineInterface.loop(audioid,false);
-                    }
-                    break ;
-                }
+
+            LaunchButtonConfig.list.get(configindex).setMode(mode);
+            if(mode==LaunchButtonConfig.LOOPMODE) {
+                SoundEngineInterface.loop(LaunchButtonConfig.getButtonConfig(configindex).getAudioID(),true);
+            }else{
+                SoundEngineInterface.loop(LaunchButtonConfig.getButtonConfig(configindex).getAudioID(),false);
             }
+
     }
 
     @Override

@@ -13,6 +13,8 @@ import com.rgp.launchpad.classes.LaunchButtonConfig;
 import com.rgp.launchpad.classes.SoundEngineInterface;
 import com.rgp.launchpad.launchpad.R;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.xml.transform.Result;
 
 /**
@@ -21,14 +23,16 @@ import javax.xml.transform.Result;
  */
 public class ButtonConfig extends Activity {
     Intent resultintent ;
-    int previewAudioID = 0;
-    int previewAudioData =0 ;
+    static int sample ;
+    static int audioPlayer ;
+    Button previewbutton ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resultintent=new Intent();
         setContentView(R.layout.activity_button_config);
-
+        previewbutton= ((Button)findViewById(R.id.preview));
+        previewbutton.setActivated(false);
         ((Button)findViewById(R.id.confirm)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,22 +46,15 @@ public class ButtonConfig extends Activity {
                     mode= LaunchButtonConfig.LOOPMODE;
 
                 resultintent.putExtra("mode",mode);
-
                 setResult(RESULT_OK, resultintent);
-                SoundEngineInterface.stop(previewAudioID);
-                SoundEngineInterface.deleteAudioDataSource(previewAudioData);
-                SoundEngineInterface.deleteAudioplayer(previewAudioID);
+                SoundEngineInterface.deleteAudioDataSource(sample);
+                sample=0 ;
+                SoundEngineInterface.deleteAudioplayer(audioPlayer);
+                audioPlayer=0 ;
                 finish();
             }
         });
 
-        ((Button)findViewById(R.id.Play)).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                SoundEngineInterface.play(previewAudioID);
-            }
-        });
 
         ((Button)findViewById(R.id.selection)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,33 +64,41 @@ public class ButtonConfig extends Activity {
             }
         });
 
+        ((Button)findViewById(R.id.preview)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               if(audioPlayer!=0){
+                   if(SoundEngineInterface.isStopped(audioPlayer))
+                       SoundEngineInterface.play(audioPlayer);
+                   else
+                       SoundEngineInterface.stop(audioPlayer);
+               }
+            }
+        });
 
     }
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)  {
+        Toast.makeText(this,"checking result ",Toast.LENGTH_LONG).show();
         if(resultCode== RESULT_OK && data != null){
-            //delete old preview wdata preparing for the new data
-            SoundEngineInterface.deleteAudioDataSource(previewAudioData);
-            SoundEngineInterface.deleteAudioplayer(previewAudioID);
-            previewAudioID = 0;
-            previewAudioData =0 ;
-            String Path= data.getExtras().getString("path");
-            Toast.makeText(this,"path "+Path,Toast.LENGTH_SHORT).show();
-            resultintent.putExtra("path",Path);
-            if(SoundEngineInterface.isInitialized()) {
-                try {
-                    previewAudioData = SoundEngineInterface.createAudioDataSourceFromURI(Path.getBytes("UTF-8"), Path.length());
-                    previewAudioID=SoundEngineInterface.createAudioPlayer(previewAudioID);
-                    if(previewAudioData==0)
-                        Toast.makeText(this,"cannot preview audio",Toast.LENGTH_LONG);
-                    else{
-                        Toast.makeText(this,"preview is ready",Toast.LENGTH_LONG).show();
-                    }
-                }catch ( Exception e){
-                    Toast.makeText(this,"error decoding filename",Toast.LENGTH_LONG).show();
-                }
-            }else{
-                Toast.makeText(this,"cannot preview audio",Toast.LENGTH_LONG).show();
+            SoundEngineInterface.deleteAudioDataSource(sample);
+            sample=0 ;
+            SoundEngineInterface.deleteAudioplayer(audioPlayer);
+            audioPlayer=0 ;
+            String path= data.getExtras().getString("path");
+            Toast.makeText(this,"path "+path,Toast.LENGTH_LONG).show();
+            resultintent.putExtra("path",path);
+
+            try {
+                sample = SoundEngineInterface.createAudioDataSourceFromURI(path.getBytes("UTF-8"),path.length());
+                audioPlayer=SoundEngineInterface.createAudioPlayer(sample);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
+            if(audioPlayer!=0)
+                previewbutton.setActivated(true);
+            else
+                previewbutton.setActivated(false);
+
         }else{
             this.setResult(RESULT_CANCELED);
 

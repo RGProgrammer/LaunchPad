@@ -29,7 +29,6 @@ typedef  struct {
 static SLObjectItf      audioengine=NULL ;
 static SLEngineItf      audioInterface ;
 static AAssetManager    *mgr=NULL ;
-static jboolean         isInitialized= false ;
 //outputMix
 static SLObjectItf         outputmixer =NULL;
 
@@ -38,15 +37,14 @@ SLDataLocator_AndroidFD loc_fd ;
 SLDataFormat_MIME format_mime ;
 SLDataLocator_OutputMix loc_outmix;
 static SLDataSink defaultaudioSnk={NULL,NULL};
-//static SLDataSource defaultsample={NULL,NULL} ;
 
 //audio sources
-const jint MAX_AUDIO_SOURCES = 25;
+const jint MAX_AUDIO_SOURCES = 36;
 static jint lastindexaudiosource = 0 ;
 static AudioPlayerStruct audiosources[MAX_AUDIO_SOURCES];
 //audio samples
 
-const jint MAX_AUDIO_SAMPLES = 25;
+const jint MAX_AUDIO_SAMPLES = 36;
 static jint lastindexaudiosample = 0 ;
 static AudioSourceStruct audiosamples[MAX_AUDIO_SAMPLES];
 
@@ -141,42 +139,20 @@ Java_com_rgp_launchpad_classes_SoundEngineInterface_initAudioEngine(JNIEnv *env,
         return 7 ;
     }
   
-    //init default audio sample
-   /*AAsset *asset = AAssetManager_open(mgr, "default.mp3", AASSET_MODE_UNKNOWN);
-    assert(asset);
-    if(!asset) {
-        return 8;
-    }
 
-    off_t start, length;
-    int fd = AAsset_openFileDescriptor(asset, &start, &length);
-    AAsset_close(asset);
-    if(fd<=0) {
-        return 9;
-    }
-
-    loc_fd = {SL_DATALOCATOR_ANDROIDFD, fd, start, length};
-    format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
-    defaultsample = {&loc_fd, &format_mime};*/
 
     // configure audio sink
     loc_outmix = {SL_DATALOCATOR_OUTPUTMIX, outputmixer};
 
     defaultaudioSnk = {&loc_outmix, NULL};
-    isInitialized= true ;
+    
     return 0 ;
 }
-extern "C"
-JNIEXPORT jboolean   Java_com_rgp_launchpad_classes_SoundEngineInterface_isInitialized()
-{
-    return isInitialized ;
-};
 
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_rgp_launchpad_classes_SoundEngineInterface_releaseAudioEngine(JNIEnv *env, jobject instance) {
     DestroyAll();
-    isInitialized=false ;
 }
 
 extern "C"
@@ -202,11 +178,7 @@ Java_com_rgp_launchpad_classes_SoundEngineInterface_createAudioPlayer(JNIEnv *en
     const SLInterfaceID ids[2] = {SL_IID_PLAY,SL_IID_SEEK};
     const SLboolean req[2] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
     if(data_id < 1 || data_id>lastindexaudiosample+1) {
-        /*res = (*audioInterface)->CreateAudioPlayer(audioInterface,
-                                                   &(audiosources[index].audioplayer),
-                                                   &defaultsample, &defaultaudioSnk, 2, ids, req);
-        audiosources[index].data_id = 0;*/
-        return 0 ;
+       return 0;
     }else {
         res = (*audioInterface)->CreateAudioPlayer(audioInterface,
                                                    &(audiosources[index].audioplayer),
@@ -379,45 +351,7 @@ Java_com_rgp_launchpad_classes_SoundEngineInterface_isLooping(JNIEnv *env, jobje
         return false ;
 }
 
-/*
-extern "C"
-JNIEXPORT jint JNICALL
-Java_com_rgp_launchpad_classes_SoundEngineInterface_createAudioDataSourceFromAssets(JNIEnv *env, jobject instance,
-                                                                    jstring filename_) {
-    const char *filename = env->GetStringUTFChars(filename_, 0);
-    jint index= lastindexaudiosample+1 ;
-    for (jint i = 0; i <= lastindexaudiosample; ++i) {
-        if (audiosources[i].audioplayer == NULL) {
-            index = i;
-            break;
-        }
-    }
-    if(index>=MAX_AUDIO_SAMPLES)
-        return 0 ;
-    if(index>lastindexaudiosample){
-        lastindexaudiosample=index ;
-    }
 
-    AAsset *asset = AAssetManager_open(mgr, filename, AASSET_MODE_UNKNOWN);
-        env->ReleaseStringUTFChars(filename_, filename);
-        if(!asset)
-            return 0 ;
-
-        off64_t start, length;
-        int fd = AAsset_openFileDescriptor64(asset, &start, &length);
-        AAsset_close(asset);
-        if(fd<=0)
-            return 0;
-
-        // configure audio source
-        audiosamples[index].loc_fd =(SLDataLocator_AndroidFD*) malloc(sizeof(SLDataLocator_AndroidFD));
-        (*((SLDataLocator_AndroidFD*)audiosamples[index].loc_fd))={SL_DATALOCATOR_ANDROIDFD,fd,start,length};
-        audiosamples[index].locatortype=0;
-        audiosamples[index].format_mime = {SL_DATAFORMAT_MIME, NULL, SL_CONTAINERTYPE_UNSPECIFIED};
-        audiosamples[index].source = {(audiosamples[index].loc_fd), &(audiosamples[index].format_mime)};
-        return index+1 ;
-}
-*/
 
 extern "C"
 JNIEXPORT jint JNICALL
