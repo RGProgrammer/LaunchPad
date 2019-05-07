@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.rgp.launchpad.activities.MainActivity;
+import com.rgp.launchpad.launchpad.R;
 
 import java.io.Serializable;
 
@@ -36,21 +37,21 @@ public class ButtonTouchListener implements View.OnTouchListener , Serializable{
                         if(config.getMode()==LaunchButtonConfig.SIMPLEMODE) {
                             SoundEngineInterface.stop(config.getAudioID());
                             SoundEngineInterface.play(config.getAudioID());
-                            v.setBackgroundColor(LaunchButtonConfig.PRESSCOLOR);
+                            v.setBackground(this.getMainActivity().getResources().getDrawable(R.drawable.launchbuttonpressed));
 
                         }else if(config.getMode()==LaunchButtonConfig.LOOPMODE){
                             if(SoundEngineInterface.isStopped(config.getAudioID())){
                                 SoundEngineInterface.play(config.getAudioID());
-                                v.setBackgroundColor(LaunchButtonConfig.PRESSCOLOR);
+                                v.setBackground(this.getMainActivity().getResources().getDrawable(R.drawable.launchbuttonpressed));
 
                             }else {
                                 SoundEngineInterface.stop(config.getAudioID());
-                                v.setBackgroundColor(LaunchButtonConfig.RELEASECOLOR);
+                                v.setBackground(this.getMainActivity().getResources().getDrawable(R.drawable.launchbuttonenabled));
                             }
                         }else if(config.getMode()==LaunchButtonConfig.HOLDMODE){
                             SoundEngineInterface.stop(config.getAudioID());
                             SoundEngineInterface.play(config.getAudioID());
-                            v.setBackgroundColor(LaunchButtonConfig.PRESSCOLOR);
+                            v.setBackground(this.getMainActivity().getResources().getDrawable(R.drawable.launchbuttonpressed));
                         }
                     }
             }else if(Main.getMode()==MainActivity.CONFIGMODE){
@@ -66,11 +67,11 @@ public class ButtonTouchListener implements View.OnTouchListener , Serializable{
             if(Main.getMode()==MainActivity.PLAYERMODE ){
                 if(config!=null){
                     if(config.getMode()==LaunchButtonConfig.SIMPLEMODE) {
-                        v.setBackgroundColor(LaunchButtonConfig.RELEASECOLOR);
+                        v.setBackground(this.getMainActivity().getResources().getDrawable(R.drawable.launchbuttonenabled));
 
                     }else if(config.getMode()==LaunchButtonConfig.HOLDMODE){
                         SoundEngineInterface.stop(config.getAudioID());
-                        v.setBackgroundColor(LaunchButtonConfig.RELEASECOLOR);
+                        v.setBackground(this.getMainActivity().getResources().getDrawable(R.drawable.launchbuttonenabled));
                     }
                 }
             }

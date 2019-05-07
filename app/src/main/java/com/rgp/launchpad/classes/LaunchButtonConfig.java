@@ -1,35 +1,19 @@
 package com.rgp.launchpad.classes;
-import android.app.Activity;
-import android.app.LauncherActivity;
+
 import android.os.Environment;
 import android.util.Xml;
-import android.widget.Button;
-import android.widget.Toast;
-
 import com.rgp.launchpad.launchpad.R;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
-
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.Buffer;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
 
 public class LaunchButtonConfig {
     public static final int         SIMPLEMODE = 0;
